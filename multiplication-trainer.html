@@ -52,6 +52,21 @@ trainer.firstChild.appendChild(document.createElement("span"));
 numbers.forEach(addColumnNumber)
 numbers.forEach(addNumberToMultiplicationTrainer);
 
+let current_problem = NaN;
+
+function show_next_problem() {
+    let all_spans = document.getElementById("mult_trainer").querySelectorAll("span");
+    let remaining_problems = Array.from(all_spans).filter((e) => e.innerText.includes("x") );
+    console.log(remaining_problems);
+    let random_problem = remaining_problems[Math.floor(Math.random() * remaining_problems.length)];
+    current_problem = random_problem;
+    let problem_components = random_problem.innerText.split(" ");
+    document.getElementById("input1").innerText = problem_components[0];
+    document.getElementById("input2").innerText = problem_components[2];
+}
+
+show_next_problem();
+
 function check_answer() {
     let input1 = document.getElementById("input1").innerText;
     let input2 = document.getElementById("input2").innerText;
@@ -62,6 +77,9 @@ function check_answer() {
     {
         console.log("Correct!");
         // Insert answer into table and show next question.
+        current_problem.innerText = answer;
+        document.getElementById("answer").value = "";
+        show_next_problem();
     }
 }
 
