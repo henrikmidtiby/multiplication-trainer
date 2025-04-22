@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title>Multiplication trainer</title>
+</head>
+<style>
+#mult_trainer div span {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+</style>
+<body>
+<h1>Multiplication trainer</h1>
+<div id="mult_trainer"></div>
+
+<div>
+Hvad er <span id="input1">3</span> gange <span id="input2">2</span>?
+<br>
+<input id="answer"></input>
+</div>
+
+<script>
+let trainer = document.getElementById("mult_trainer");
+let numbers = [1, 2, 3];
+
+function addNumberToRowInMultipliactionTrainer(outerNumber, innerNumber, rowElement) 
+{
+    let elem = document.createElement("span");
+    elem.innerHTML = outerNumber + " x " + innerNumber;
+    rowElement.appendChild(elem);
+}
+
+function addNumberToMultiplicationTrainer(number) {
+    let elem = document.createElement("div");
+    trainer.appendChild(elem);
+    let row_name = document.createElement("span");
+    row_name.innerHTML = number
+    elem.appendChild(row_name);
+
+    numbers.forEach((n) => addNumberToRowInMultipliactionTrainer(number, n, elem));
+}
+
+function addColumnNumber(number) {
+    let elem = document.createElement("span");
+    elem.innerHTML = number;
+    trainer.firstChild.appendChild(elem);
+}
+
+trainer.appendChild(document.createElement("div"));
+trainer.firstChild.appendChild(document.createElement("span"));
+numbers.forEach(addColumnNumber)
+numbers.forEach(addNumberToMultiplicationTrainer);
+
+function check_answer() {
+    let input1 = document.getElementById("input1").innerText;
+    let input2 = document.getElementById("input2").innerText;
+    let answer = document.getElementById("answer").value;
+    console.log(input1 * input2);
+    console.log(answer);
+    if(input1 * input2 == answer)
+    {
+        console.log("Correct!");
+        // Insert answer into table and show next question.
+    }
+}
+
+document.getElementById("answer").addEventListener("keyup", check_answer);
+</script>
+</body>
+</html>
