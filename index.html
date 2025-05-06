@@ -12,7 +12,6 @@
 </style>
 <body>
 <h1>Multiplication trainer</h1>
-<div id="mult_trainer"></div>
 
 <div>
 Hvad er <span id="input1">3</span> gange <span id="input2">2</span>?
@@ -21,9 +20,13 @@ Hvad er <span id="input1">3</span> gange <span id="input2">2</span>?
 </div>
 
 <div id="timer">
-<span id="timer_value"></span>
+<span id="timer_value">0 </span> sekunder
 </div>
 
+<div style="height: 50px;">
+</div>
+
+<div id="mult_trainer"></div>
 <script>
 let trainer = document.getElementById("mult_trainer");
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -73,6 +76,10 @@ function show_next_problem() {
     else 
     {
         // Stop timer
+        alert("Færdig, godt gået!");
+        document.getElementById("answer").removeEventListener("keyup", check_answer);
+        let message = "Du løste " + numbers.length**2 + " gangestykker på " + (Date.now() - timer) / 1000 + " sekunder.";
+        document.getElementById("timer").innerText = message;
     }
 }
 
@@ -83,15 +90,12 @@ function check_answer() {
     {
         timer = Date.now(); 
     }
-    document.getElementById("timer_value").innerText = Date.now() - timer;
+    document.getElementById("timer_value").innerText = (Date.now() - timer) / 1000;
     let input1 = document.getElementById("input1").innerText;
     let input2 = document.getElementById("input2").innerText;
     let answer = document.getElementById("answer").value;
-    console.log(input1 * input2);
-    console.log(answer);
     if(input1 * input2 == answer)
     {
-        console.log("Correct!");
         current_problem.innerText = answer;
         document.getElementById("answer").value = "";
         show_next_problem();
